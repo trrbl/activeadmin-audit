@@ -6,7 +6,8 @@ module ActiveAdmin
       end
 
       def paper_trail_enabled_for_controller
-        request.fullpath.start_with?('/admin')
+        default_namespase = ActiveAdmin.application.default_namespace
+        request.fullpath.start_with?("/#{ default_namespase || 'admin' }")
       end
     end
   end
