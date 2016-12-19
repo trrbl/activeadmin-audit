@@ -39,7 +39,11 @@ module ActiveAdmin
             elsif values.is_a? Hash
               # hash with diff in '+'/'-'
               values.each do |k, items|
-                values[k] = items.map { |value| materialize_item(klass, attr, value) }
+                if items.respond_to?(:map)
+                  values[k] = items.map { |value| materialize_item(klass, attr, value) }
+                else
+                  values[k] = materialize_item(klass, attr, items)
+                end
               end
             else
               # any values
